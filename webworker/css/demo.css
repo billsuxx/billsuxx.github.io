@@ -1,0 +1,18 @@
+body {
+  padding: 50px 0 0 0;
+}
+
+#log {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 25px;
+  background: #000;
+  color: #FFF;
+  font-size: 3em;
+}
+
+.success {
+  color: green;
+  font-weight: bold;
+}
