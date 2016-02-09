@@ -2,35 +2,55 @@
 
 !(function(win,doc) {
 
-  var interval,
-      counter = 0,
-      logDiv = doc.getElementById("log"),
-      piDiv  = doc.getElementById("PiValue")
+  var app = {
 
-  interval = setInterval(function(){
-    logDiv.innerHTML = counter++;
-  }, 1000);
+    init: function() {
+      var self = this;
 
-  function generatePibyWorker() {
-    var worker;
+      this.counter = 0;
+      this.worker  = new Worker('./js/piworker.js');;
+      this.logDiv  = doc.getElementById("log");
+      this.piDiv   = doc.getElementById("PiValue");
 
-    piDiv.classList.remove("success");
-    worker = new Worker('./js/piworker.js');
+      this.interval = setInterval(function(){
+        self.logDiv.innerHTML = self.counter++;
+      }, 1000);
 
-    worker.onmessage = function(e) {
-      piDiv.innerHTML = e.data.PiValue;
-      piDiv.classList.add("success");
-    };
+      this.bindWorkerEvents();
 
-    worker.onerror = function(e) {
-      alert('Error: Line ' + e.lineno + ' in ' + e.filename + ': ' + e.message);
-    };
+    },
 
-    worker.postMessage({'cmd':   'generatePi',
-      'value': doc.getElementById("loop").value
-    });
-  }
+    sendMessage: function(message) {
+      this.worker.postMessage(message);
+    },
 
-  doc.getElementById("generatepi").addEventListener("click", generatePibyWorker);
+    bindWorkerEvents: function() {
+      var self = this;
+
+      this.worker.addEventListener('message', function(e) {
+        var data = e.data;
+        self.piDiv.innerHTML = data.msg;
+        self.piDiv.classList.add(data.type);
+      }, false);
+
+      this.worker.addEventListener('error', function(e) {
+        alert('Error: Line ' + e.lineno + ' in ' + e.filename + ': ' + e.message);
+      }, false);
+
+    }
+
+  };
+
+  app.init();
+
+  doc.getElementById("generatepi").addEventListener("click", function(){
+    doc.getElementById("PiValue").classList.remove("success");
+    doc.getElementById("PiValue").classList.remove("danger")
+    app.sendMessage({'cmd': 'generatePi', 'value':  doc.getElementById("loop").value});
+  });
+
+  doc.getElementById("stopworker").addEventListener("click", function(){
+    app.sendMessage({'cmd': 'terminate'});
+  });
 
 })(window,document);

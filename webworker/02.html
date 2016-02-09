@@ -3,12 +3,12 @@
   <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
-    <link rel="stylesheet" href="./css//milligram.min.css">
-    <link rel="stylesheet" href="./css//demo.css">
+    <link rel="stylesheet" href="./css/milligram.min.css">
+    <link rel="stylesheet" href="./css/demo.css">
     <title>Web Worker 02</title>
   </head>
   <body>
-    
+
     <div class="container">
       <div class="row">
         <div class="column column-50 column-offset-25">
@@ -19,6 +19,7 @@
           <label for="loop">Enter the number of cycles:</label>
           <input id="loop" type="number" value="100" autocomplete="off" />
           <input type="button" id="generatepi" value="Calculate Pi" class="button-primary" />
+          <input type="button" id="stopworker" value="Stop worker" class="button-black" />
           <br>
           <div id="PiValue">PI value appears here</div>
           </fieldset>

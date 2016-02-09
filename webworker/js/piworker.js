@@ -14,9 +14,22 @@ function generatePi(loop) {
       pi=pi+(4/n)-(4/(n+2));
       n=n+4;
     }
-    self.postMessage({'PiValue': pi});
+    self.postMessage({'msg': pi, 'type': 'success'});
 }
 
-self.onmessage = function(e) {
-  generatePi(e.data.value);
-}
+
+self.addEventListener('message', function(e) {
+  var data = e.data;
+
+  switch(data.cmd) {
+    case 'generatePi':
+      generatePi(data.value);
+      break;
+    case 'terminate':
+      self.postMessage({'msg': 'Worker terminated.', 'type': 'danger'});
+      self.close();
+      break;
+    default:
+      self.postMessage({'msg': 'Unknown command.' + data.cmd, 'type': 'danger'});
+  }
+}, false);

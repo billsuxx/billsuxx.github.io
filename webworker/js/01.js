@@ -1,3 +1,5 @@
+// inspired by ejohn.org
+
 !(function(win,doc) {
 
   var interval,

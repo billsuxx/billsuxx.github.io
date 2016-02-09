@@ -12,7 +12,17 @@ body {
   font-size: 3em;
 }
 
+input.button-black {
+  background-color: black;
+  border-color: black;
+}
+
 .success {
   color: green;
+  font-weight: bold;
+}
+
+.danger {
+  color: red;
   font-weight: bold;
 }
