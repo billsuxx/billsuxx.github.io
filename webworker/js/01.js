@@ -4,15 +4,15 @@
 
   var interval,
       counter = 0,
-      logDiv = doc.getElementById("log")
+      logDiv = doc.querySelector("#log")
 
   interval = setInterval(function(){
     logDiv.innerHTML = counter++;
   }, 1000);
 
   function generatePi() {
-    var loop = doc.getElementById("loop"),
-        piDiv = doc.getElementById("PiValue"),
+    var loop = doc.querySelector("#loop"),
+        piDiv = doc.querySelector("#PiValue"),
         c = parseInt(loop.value),
         f = parseFloat(loop.value),
         pi = 0, n = 1, i = 0;
@@ -47,6 +47,6 @@
   }
 
 
-  document.getElementById("generatepi").addEventListener("click", generatePi);
+  doc.querySelector("#generatepi").addEventListener("click", generatePi);
 
 })(window,document);

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="./css/milligram.min.css">
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/demo.css">
+    <title>Service Worker 01</title>
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="column column-50 column-offset-25">
+
+        <h1>Service Worker 01</h1>
+
+        <div class="output">
+          <div id="status"></div>
+
+          <ul id="images" style="display: none">
+            <li><img src="./img/chrome.png"></li>
+          </ul>
+        </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="log">0</div>
+    <script type="text/javascript">
+    !(function(win,doc) {
+
+    function showImages() {
+      doc.querySelector('#images').style.display = 'block';
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js', {scope: './'}).then(function() {
+
+        if (navigator.serviceWorker.controller) {
+
+          doc.querySelector('#status').textContent = 'The service worker is currently handling network operations';
+
+          showImages();
+        } else {
+          doc.querySelector('#status').textContent = 'Please reload this page to allow the service worker to handle network operations.';
+        }
+      }).catch(function(error) {
+
+        doc.querySelector('#status').textContent = error;
+      });
+    } else {
+        doc.querySelector('#status').textContent  = 'Service workers are not supported in the current browser.';
+    }
+
+    })(window,document);
+
+    </script>
+  </body>
+</html>
